@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Survey Form</title>
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+    />
+    <style>
+      * {
+        padding: 0;
+        margin: 0;
+        box-sizing: border-box;
+      }
+
+      :root {
+        --main-color: #3a0ca3;
+        --background-color: #8c3fe2;
+      }
+
+      body {
+        display: grid;
+        place-items: center;
+        height: 100vh;
+        background: var(--background-color);
+      }
+
+      #FormContainer {
+        background-color: #ffffffa1;
+        backdrop-filter: blur(10px);
+        border: 2px solid #ffffff6d;
+        width: 500px;
+        border-radius: 10px;
+        box-shadow: 3px 3px 11px 1.5px #0000002b;
+        font-family: "Poppins", sans-serif;
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+      }
+
+      h1 {
+        color: var(--main-color);
+        font-size: 2.1rem;
+        font-weight: 800;
+        margin-bottom: 20px;
+        text-align: center;
+      }
+
+      form {
+        display: flex;
+        flex-direction: column;
+      }
+
+      .Name,
+      .Phone,
+      .password {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+      }
+
+      .gender-options {
+        display: flex;
+        gap: 10px;
+      }
+
+      form li {
+        list-style-type: none;
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 20px;
+      }
+
+      form label {
+        font-size: 0.8rem;
+        font-weight: 600;
+        color: var(--main-color);
+      }
+
+      form input,
+      form select {
+        padding: 10px;
+        border-radius: 8px;
+        border: none;
+        background-color: #ffffff6d;
+        width: 100%;
+        outline: none;
+        color: var(--main-color);
+      }
+
+      form input:focus,
+      form select:focus,
+      form input:hover,
+      form select:hover {
+        border: 1px solid var(--main-color);
+      }
+
+      .gender-options {
+        display: flex;
+        gap: 10px;
+      }
+      .gender-options input[type="checkbox"] {
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        -ms-appearance: none;
+        -o-appearance: none;
+        appearance: none;
+
+        /* Checkbox styles */
+        width: 16px;
+        height: 16px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        margin-right: 10px;
+
+        /* Checked checkbox styles */
+        background-color: #21b6a8;
+        color: #fff;
+      }
+
+      .gender-options input[type="checkbox"]:checked {
+        background-color: #21b6a8;
+        color: #fff;
+      }
+
+      .gender-options label {
+        font-weight: normal;
+        margin-right: 15px;
+      }
+
+      .checkbox-container {
+        display: block;
+        position: relative;
+        padding-left: 30px;
+        margin-bottom: 12px;
+        cursor: pointer;
+        font-size: 0.8rem;
+        color: var(--main-color);
+      }
+
+      .checkbox-container input {
+        position: absolute;
+        opacity: 0;
+        cursor: pointer;
+      }
+
+      .checkmark {
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 18px;
+        width: 18px;
+        background-color: #fff;
+        border: 1px solid var(--main-color);
+        border-radius: 5px;
+      }
+
+      .checkbox-container input:checked ~ .checkmark {
+        background-color: var(--main-color);
+      }
+
+      .checkmark:after {
+        content: "";
+        position: absolute;
+        display: none;
+      }
+
+      .checkbox-container input:checked ~ .checkmark:after {
+        display: block;
+      }
+
+      .checkbox-container .checkmark:after {
+        left: 5px;
+        top: 1px;
+        width: 5px;
+        height: 10px;
+        border: solid white;
+        border-width: 0 2px 2px 0;
+        transform: rotate(45deg);
+      }
+
+      .Subscribe {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        margin-top: 5px;
+      }
+
+      .CheckBoxCont {
+        width: 20px;
+        height: 20px;
+        border-radius: 5px;
+        border: 1px solid var(--main-color);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: background-color 0.2s;
+      }
+
+      .CheckBoxCont:hover {
+        background-color: var(--main-color);
+      }
+
+      .Tickline2,
+      .Tickline1 {
+        background-color: var(--main-color);
+        border-radius: 20px;
+        height: 3px;
+        width: 20px;
+        transition: background-color 0.3s;
+      }
+
+      .Tickline1 {
+        transform: rotate(-45deg);
+        opacity: 0;
+      }
+
+      .Tickline2 {
+        transform: rotate(50deg);
+        width: 8px;
+        opacity: 0;
+      }
+
+      .Subscribe label {
+        padding: 10px;
+      }
+
+      form button {
+        margin-top: 5px;
+        padding: 10px 20px;
+        border-radius: 5px;
+        font-size: 1.1rem;
+        color: white;
+        background-color: var(--main-color);
+        border: none;
+        cursor: pointer;
+      }
+
+      .popup {
+        /* Styles for the popup container */
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        align-items: center;
+        justify-content: center;
+        z-index: 2;
+      }
+
+      .popup-content {
+        /* Styles for the content inside the popup */
+        background: #fff;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        max-width: 80%;
+        text-align: left;
+      }
+
+      .close-popup {
+        /* Styles for the close button */
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        cursor: pointer;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="FormContainer">
+      <form id="Form">
+        <h1>Survey Form</h1>
+        <div class="Name">
+          <li>
+            <label>First Name:</label>
+            <input type="text" placeholder="John" />
+          </li>
+          <li>
+            <label>Last Name:</label>
+            <input type="text" placeholder="Doe" />
+          </li>
+        </div>
+        <li>
+          <label>Date of Birth:</label>
+          <input type="date" required />
+        </li>
+        <li>
+          <label>Country:</label>
+          <select required>
+            <option value="">Please select</option>
+            <option value="Afghanistan">Afghanistan</option>
+            <option value="Albania">Albania</option>
+            <option value="Algeria">Algeria</option>
+            <option value="Andorra">Andorra</option>
+            <option value="Angola">Angola</option>
+            <option value="Argentina">Argentina</option>
+            <option value="Armenia">Armenia</option>
+            <option value="Australia">Australia</option>
+            <option value="Austria">Austria</option>
+            <option value="Azerbaijan">Azerbaijan</option>
+            <option value="Croatia">Croatia</option>
+          </select>
+        </li>
+        <div class="Phone">
+          <li>
+            <label>Gender:</label>
+            <div class="gender-options">
+              <label class="checkbox-container"
+                >Male
+                <input type="checkbox" name="gender" value="Male" />
+                <span class="checkmark"></span>
+              </label>
+              <label class="checkbox-container"
+                >Female
+                <input type="checkbox" name="gender" value="Female" />
+                <span class="checkmark"></span>
+              </label>
+              <label class="checkbox-container"
+                >Other
+                <input type="checkbox" name="gender" value="Other" />
+                <span class="checkmark"></span>
+              </label>
+            </div>
+          </li>
+
+          <li>
+            <label>Profession:</label>
+            <input type="text" required />
+          </li>
+          <li>
+            <label>Email:</label>
+            <input type="email" required />
+          </li>
+          <li>
+            <label>Mobile Number:</label>
+            <input type="tel" required />
+          </li>
+        </div>
+        <li class="Subscribe">
+          <div
+            class="CheckBoxCont"
+            onclick="ToggleCheckBox(this)"
+            data-status="true"
+          >
+            <div class="tick">
+              <hr class="Tickline1" />
+              <hr class="Tickline2" />
+            </div>
+          </div>
+          <label for="subscribe">I want to get updates.</label>
+        </li>
+        <div>
+          <button type="button" class="submit-button" onclick="submitForm()">Submit</button>
+          <button type="button" class="reset-button">Reset</button>
+        </div>
+      </form>
+    </div>
+    <div class="popup" id="popup">
+      <div class="popup-content">
+        <span class="close-popup" onclick="closePopup()">&times;</span>
+        <div id="popup-content"></div>
+      </div>
+    </div>
+    <script>
+      function ToggleCheckBox(element) {
+        const status = element.getAttribute("data-status");
+        if (status === "true") {
+          element.style.backgroundColor = "var(--main-color)";
+          element.querySelector(".Tickline1").style.opacity = "1";
+          element.querySelector(".Tickline2").style.opacity = "1";
+          element.setAttribute("data-status", "false");
+        } else {
+          element.style.backgroundColor = "transparent";
+          element.querySelector(".Tickline1").style.opacity = "0";
+          element.querySelector(".Tickline2").style.opacity = "0";
+          element.setAttribute("data-status", "true");
+        }
+      }
+
+      function submitForm() {
+        const firstName = document.querySelector(
+          "input[placeholder='John']"
+        ).value;
+        const lastName = document.querySelector(
+          "input[placeholder='Doe']"
+        ).value;
+        const dob = document.querySelector("input[type='date']").value;
+        const country = document.querySelector("select").value;
+        const gender = document.querySelectorAll(
+          "input[name='gender']:checked"
+        );
+        const profession = document.querySelector("input[type='text']").value;
+        const email = document.querySelector("input[type='email']").value;
+        const mobileNumber = document.querySelector("input[type='tel']").value;
+        let genderValues = [];
+        gender.forEach((g) => {
+          genderValues.push(g.value);
+        });
+        const subscribe =
+          document
+            .querySelector(".CheckBoxCont")
+            .getAttribute("data-status") === "false"
+            ? "Yes"
+            : "No";
+        const popupContent = `
+            <h2>Survey Form Submitted</h2>
+            <p>First Name: ${firstName}</p>
+            <p>Last Name: ${lastName}</p>
+            <p>Date of Birth: ${dob}</p>
+            <p>Country: ${country}</p>
+            <p>Gender: ${genderValues.join(", ")}</p>
+            <p>Profession: ${profession}</p>
+            <p>Email: ${email}</p>
+            <p>Mobile Number: ${mobileNumber}</p>
+            <p>Subscribe to updates: ${subscribe}</p>
+        `;
+        const popup = document.createElement("div");
+        popup.className = "popup";
+        popup.innerHTML = `<div class="popup-content">${popupContent}</div>`;
+        document.body.appendChild(popup);
+      }
+
+      
+    </script>
+  </body>
+</html>
